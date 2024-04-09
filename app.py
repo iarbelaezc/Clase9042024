@@ -71,7 +71,7 @@ option_day = st.selectbox('Selecciona filtro por día', ('LUNES', 'MARTES', 'MI�
 option_neighborhood = st.selectbox('Selecciona filtro por barrio', dfbarr['Barrio'].unique())
 
 # Aplicar los filtros
-df_filtrado = dfbarr.query('día == @option_day and Hora >= @option_hour_min and barrio == @option_neighborhood')
+df_filtrado = dfbarr.query('dia == @option_day and Hora >= @option_hour_min and barrio == @option_neighborhood')
 
 # Mostrar el DataFrame filtrado
 st.dataframe(df_filtrado)

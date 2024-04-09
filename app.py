@@ -40,7 +40,7 @@ nm= st.slider('Selecciona el número de registros de accidentes quieres visualiz
 #Construir la tabla de datos (dataframe)
 dfLa = pd.DataFrame({'lat':La[0 : nm]})
 dfLo = pd.DataFrame({'lon':Lo[0 : nm]})
-dfdia= pd.DataFrame({'día' :day[0:nm]})
+dfdia= pd.DataFrame({'dia' :day[0:nm]})
 dfhor= pd.DataFrame({'Hora' :hour[0:nm]})
 dfbarr=pd.DataFrame({'Barrio':neig[0:nm]})
 dfdir=pd.DataFrame({'Dirección':dir[0:nm]})

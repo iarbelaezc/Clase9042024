@@ -52,24 +52,37 @@ st.dataframe(df_g)
 st.map(df_g)
 
 # Realizar un filtrado de los datos
+import streamlit as st
+
+# Suponiendo que tienes un DataFrame llamado df_g con una columna 'barrio'
+
+# Realizar un filtrado de los datos
 st.subheader('Filtrado')
+
+# Filtrado por hora
 option_hour_min = st.selectbox('Selecciona filtro por Hora',
-                               ('08:00:00', '09:00:00', '10:00:00','11:00:00','12:00:00','13:00:00','14:00:00'),key='1')
-#option_hour_max = st.selectbox('Selecciona filtro por Hora',
-#                               ('08:00:00', '09:00:00', '10:00:00','11:00:00','12:00:00','13:00:00','14:00:00'),key='2')
-option_day = st.selectbox('Selecciona filtro por día',('LUNES', 'MARTES', 'MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO'))
-#df_filtrado = df_g.query('día == "MIÉRCOLES" and Hora >= "08:00:00" and Hora <= "10:00:00"')
-df_filtrado = df_g.query('día == @option_day and Hora >=  @option_hour_min ')
+                               ('08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00'),
+                               key='1')
+
+# Filtrado por día
+option_day = st.selectbox('Selecciona filtro por día', ('LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'))
+
+# Filtrado por barrio
+option_neighborhood = st.selectbox('Selecciona filtro por barrio', df_g['barrio'].unique())
+
+# Aplicar los filtros
+df_filtrado = df_g.query('día == @option_day and Hora >= @option_hour_min and barrio == @option_neighborhood')
+
+# Mostrar el DataFrame filtrado
 st.dataframe(df_filtrado)
-#Filtrar por barrio
-option_neighborhood = st.selectbox('Selecciona filtro por barrio', dfbarr['barrio'].unique())
+
 try:
-   st.metric("Cantidad de Incidentes dentro del filtro", df_filtrado.shape[0])
+    # Mostrar la cantidad de incidentes dentro del filtro
+    st.metric("Cantidad de Incidentes dentro del filtro", df_filtrado.shape[0])
 except:
     pass
 
-
+# Mostrar un mapa con los incidentes filtrados
 st.map(df_filtrado)
-#st.write(df)
 
 

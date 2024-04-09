@@ -14,7 +14,7 @@ st.write('Se entiende por accidente de tránsito evento, generalmente involuntar
          'personas y bienes involucrados en él, e igualmente afecta la normal circulación de los vehículos que se movilizan por la vía o vías comprendidas en el '
          'lugar o dentro de la zona de influencia del hecho0 (Ley 769 de 2002 - Código Nacional de Tránsito)'
          )
-image= Image.open('alertas.png')
+image= Image.open('accidentes.png')
 
 st.subheader('Sistema de consulta de Accidentalidad municipio de Medellín')
 

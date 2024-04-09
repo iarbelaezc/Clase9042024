@@ -9,54 +9,50 @@ with open('Mapa de Accidentalidad Vial Municipio de Medellín 2016 (1).geojson',
 
 st.title("Accidentalidad Municipio de Medellín 2016")
 
-st.write('Se entiende por accidente de tránsito  evento, generalmente involuntario, generado al menos por un un vehículo en movimiento, que causa daños a '
-         'personas y bienes involucrados en él, e igualmente afecta la normal circulación de los vehículos que se movilizan por la vía o vías comprendidas en el' 
+st.write('Se entiende por accidente de tránsito evento, generalmente involuntario, generado al menos por un un vehículo en movimiento, que causa daños a '
+         'personas y bienes involucrados en él, e igualmente afecta la normal circulación de los vehículos que se movilizan por la vía o vías comprendidas en el '
          'lugar o dentro de la zona de influencia del hecho0 (Ley 769 de 2002 - Código Nacional de Tránsito)'
          )
 st.subheader('Sistema de consulta de Accidentalidad municipio de Medellín')
 
 La = []
-Lo= []
-day=[]
-hour=[]
-neig=[]
-dir=[]    
+Lo = []
+day = []
+hour = []
+neig = []
+dir = []
 
 # Decodificar el archivo en formato JSON (Java Script Object Notation)
 for feature in data['features']:
     coordinates = feature['geometry']['coordinates']
-    dia=feature['properties']['dia']
-    Hora=feature['properties']['hora']
-    barrio=feature['properties']['barrio']
-    direccion=feature['properties']['direccion']
+    dia = feature['properties']['dia']
+    Hora = feature['properties']['hora']
+    barrio = feature['properties']['barrio']
+    direccion = feature['properties']['direccion']
     La.append(coordinates[1])
-    Lo.append(coordinates[0])  
+    Lo.append(coordinates[0])
     day.append(dia)
     hour.append(Hora)
     neig.append(barrio)
     dir.append(direccion)
-    
-nm= st.slider('Selecciona el número de registros de accidentes quieres visualizar', 5, 1500)
-#Construir la tabla de datos (dataframe)
-dfLa = pd.DataFrame({'lat':La[0 : nm]})
-dfLo = pd.DataFrame({'lon':Lo[0 : nm]})
-dfdia= pd.DataFrame({'dia' :day[0:nm]})
-dfhor= pd.DataFrame({'Hora' :hour[0:nm]})
-dfbarr=pd.DataFrame({'Barrio':neig[0:nm]})
-dfdir=pd.DataFrame({'Dirección':dir[0:nm]})
-df_g=pd.concat([dfLa, dfLo, dfdia, dfhor,dfdir,dfbarr], axis=1)
+
+nm = st.slider('Selecciona el número de registros de accidentes quieres visualizar', 5, 1500)
+# Construir la tabla de datos (dataframe)
+dfLa = pd.DataFrame({'lat': La[0: nm]})
+dfLo = pd.DataFrame({'lon': Lo[0: nm]})
+dfdia = pd.DataFrame({'dia': day[0:nm]})
+dfhor = pd.DataFrame({'Hora': hour[0:nm]})
+dfbarr = pd.DataFrame({'Barrio': neig[0:nm]})
+dfdir = pd.DataFrame({'Dirección': dir[0:nm]})
+df_g = pd.concat([dfLa, dfLo, dfdia, dfhor, dfdir, dfbarr], axis=1)
 
 # Mostrar la tabla de datos (dataframe)
 st.dataframe(df_g)
-#Dibujar el mapa utilizando las columnas 'lat', 'lon'.
+# Dibujar el mapa utilizando las columnas 'lat', 'lon'.
 st.map(df_g)
 
 # Realizar un filtrado de los datos
-import streamlit as st
 
-# Suponiendo que tienes un DataFrame llamado df_g con una columna 'barrio'
-
-# Realizar un filtrado de los datos
 st.subheader('Filtrado')
 
 # Filtrado por hora
@@ -71,7 +67,7 @@ option_day = st.selectbox('Selecciona filtro por día', ('LUNES', 'MARTES', 'MI�
 option_neighborhood = st.selectbox('Selecciona filtro por barrio', dfbarr['Barrio'].unique())
 
 # Aplicar los filtros
-df_filtrado = dfbarr.query('dia == @option_day and Hora >= @option_hour_min and barrio == @option_neighborhood')
+df_filtrado = df_g.query('dia == @option_day and Hora >= @option_hour_min and Barrio == @option_neighborhood')
 
 # Mostrar el DataFrame filtrado
 st.dataframe(df_filtrado)
@@ -84,5 +80,3 @@ except:
 
 # Mostrar un mapa con los incidentes filtrados
 st.map(df_filtrado)
-
-

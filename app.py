@@ -61,7 +61,8 @@ option_day = st.selectbox('Selecciona filtro por día',('LUNES', 'MARTES', 'MIÉ
 #df_filtrado = df_g.query('día == "MIÉRCOLES" and Hora >= "08:00:00" and Hora <= "10:00:00"')
 df_filtrado = df_g.query('día == @option_day and Hora >=  @option_hour_min ')
 st.dataframe(df_filtrado)
-
+#Filtrar por barrio
+option_neighborhood = st.selectbox('Selecciona filtro por barrio', dfbarr['barrio'].unique())
 try:
    st.metric("Cantidad de Incidentes dentro del filtro", df_filtrado.shape[0])
 except:
@@ -70,3 +71,5 @@ except:
 
 st.map(df_filtrado)
 #st.write(df)
+
+
